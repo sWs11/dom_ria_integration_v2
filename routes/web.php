@@ -30,5 +30,9 @@ Route::get('/testCron2', 'MainController@testCron2')->name('testCron2');
 Route::get('/testCron3', 'MainController@testCron3')->name('testCron3');
 Route::get('/testEcho', 'MainController@testEcho')->name('testEcho');
 
+Route::get('/testBot', 'SubscribeController@index')->name('testBot');
+Route::get('/sendMessage', 'SubscribeController@sendMessage')->name('sendMessage');
+Route::get('/getSubscribeLink', 'SubscribeController@getSubscribeLink')->name('getSubscribeLink');
+
 
 Route::get('orders/{page?}', 'OrdersController@ordersList')->name('orders')->where(['page' => '[0-9]+']);

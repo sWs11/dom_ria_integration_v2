@@ -71,6 +71,11 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-info" id="subscribe">Підписатись</button>
+                </div>
+            </div>
         </form>
     </div>
     <div class="container">
@@ -128,6 +133,8 @@
 @push('page_script')
     <script>
         $(function () {
+
+            $('#subscribe').on('click', subscribe);
 
             var categories = {};
             var realty_types = {};
@@ -222,6 +229,10 @@
                 });
 
                 operation_types_select.setChoices(operation_types_local);
+            }
+
+            function subscribe(event) {
+
             }
 
             $('#category_select').on('change', function (event) {
