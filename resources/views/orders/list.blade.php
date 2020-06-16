@@ -73,7 +73,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <button class="btn btn-info" id="subscribe">Підписатись</button>
+                    <button class="btn btn-info" id="subscribe" type="button">Підписатись</button>
                 </div>
             </div>
         </form>
@@ -134,7 +134,7 @@
     <script>
         $(function () {
 
-            $('#subscribe').on('click', subscribe);
+            $('#subscribe').on('click', saveSubscribe);
 
             var categories = {};
             var realty_types = {};
@@ -231,8 +231,38 @@
                 operation_types_select.setChoices(operation_types_local);
             }
 
-            function subscribe(event) {
+            function saveSubscribe(event) {
+                let filter = {
+                    realty_type_parent_id: categories_select.passedElement.value,
+                    realty_type_id: realty_types_select.passedElement.value,
+                    advert_type_id: operation_types_select.passedElement.value,
+                };
 
+                console.log(filter);
+
+                $.ajax({
+                    url: '{{ route('saveSubscribe') }}',
+                    type: 'POST',
+                    data: {
+                        filter: filter,
+                        _token: '{{ csrf_token() }}'
+                    }
+                })
+                .done(function (response) {
+                    if(response.status === 'success') {
+                        getSubscribeLink();
+                    }
+                });
+            }
+
+            function getSubscribeLink(event) {
+                $.ajax({
+                    url: '{{ route('getSubscribeLink') }}',
+                })
+                .done(function (response) {
+                    var new_tab = window.open('', '_blank');
+                    new_tab.location.href = response.data.link;
+                });
             }
 
             $('#category_select').on('change', function (event) {

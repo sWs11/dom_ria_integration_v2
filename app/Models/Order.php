@@ -77,6 +77,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereStreetName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereWallType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereYoutubeLink($value)
+ * @property string|null $building_number_str
+ * @property string|null $flat_number
+ * @property int|null $total_square_meters
+ * @property int|null $realty_type_parent_id category id
+ * @property int|null $realty_type_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereBuildingNumberStr($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereFlatNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereRealtyTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereRealtyTypeParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereTotalSquareMeters($value)
  */
 class Order extends Model
 {

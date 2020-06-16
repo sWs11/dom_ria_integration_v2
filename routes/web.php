@@ -33,6 +33,7 @@ Route::get('/testEcho', 'MainController@testEcho')->name('testEcho');
 Route::get('/testBot', 'SubscribeController@index')->name('testBot');
 Route::get('/sendMessage', 'SubscribeController@sendMessage')->name('sendMessage');
 Route::get('/getSubscribeLink', 'SubscribeController@getSubscribeLink')->name('getSubscribeLink');
+Route::post('/saveSubscribe', 'SubscribeController@saveSubscribe')->name('saveSubscribe');
 
 
 Route::get('orders/{page?}', 'OrdersController@ordersList')->name('orders')->where(['page' => '[0-9]+']);

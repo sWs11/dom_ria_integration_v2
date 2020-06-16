@@ -7,5 +7,5 @@ return [
 
     'telegram_bot_link' => 'http://t.me/VinnynsiaDomRiaBot',
     'telegram_api_bot_base_url' => 'https://api.telegram.org/bot',
-    'telegram_api_bot_key' => '940813005:AAGbabA2AnPlpdacXcYluoa3aLQz8YQYp_8',
+    'telegram_api_bot_key' => env('TELEGRAM_API_BOT_KEY'),
 ];

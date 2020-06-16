@@ -31,6 +31,12 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedAt($value)
+ * @property string|null $telegram_subscribe_key
+ * @property string|null $telegram_user_id
+ * @property string|null $telegram_chat_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereTelegramChatId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereTelegramSubscribeKey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereTelegramUserId($value)
  */
 class User extends Authenticatable
 {
