@@ -66,15 +66,15 @@ class Cron {
         ];
 
         do {
-            $result = $dom_ria_integration->getOrdersFromApi($current_page, array_merge(['date_from' => '2020-06-16'], $filter));
+            $result = $dom_ria_integration->getOrdersFromApi($current_page, array_merge(['date_from' => '2020-06-17'], $filter));
             $count_pages = $current_page !== 0 ? $count_pages : ceil($result['count']/100);
             $orders_ext_ids = $result['items'];
 
-            dump([
+            /*dump([
                 '$count_pages' => $count_pages,
                 '$current_page' => $current_page,
                 '$result[\'count\']' => $result['count']
-            ]);
+            ]);*/
 
 
             if(gettype($orders_ext_ids) !== 'array') {
@@ -91,6 +91,8 @@ class Cron {
 
             $current_page++;
         } while($current_page < $count_pages);
+
+
     }
 
     public function getOrdersInfo(array $orders_ext_ids) {
@@ -243,7 +245,7 @@ class Cron {
                 'all_response' => $response,
             ]);
         } catch (\Exception $e) {
-            dump(111);
+            dump($e->getMessage());
 //            dump($e->getMessage());
         }
     }

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 class MainController extends Controller
 {
     public function index() {
-        $curl = curl_init();
+        /*$curl = curl_init();
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://developers.ria.com/dom/search?category=1&realty_type=2&operation_type=1&state_id=10&city_id=10&district_id=15187&district_id=15189&district_id=15188&characteristic%5B209%5D%5Bfrom%5D=1&characteristic%5B209%5D%5Bto%5D=3&%0Acharacteristic%5B214%5D%5Bfrom%5D=60&characteristic%5B214%5D%5Bto%5D=90&characteristic%5B216%5D%5Bfrom%5D=30&characteristic%5B216%5D%5Bto%5D=50&%0Acharacteristic%5B218%5D%5Bfrom%5D=4&characteristic%5B218%5D%5Bto%5D=9&characteristic%5B227%5D%5Bfrom%5D=3&characteristic%5B227%5D%5Bto%5D=7&%0Acharacteristic%5B443%5D=442&characteristic%5B234%5D%5Bfrom%5D=20000&characteristic%5B234%5D%5Bto%5D=90000&%0Acharacteristic%5B242%5D=239&characteristic%5B273%5D=273&characteristic%5B1437%5D=1434&api_key=M8QJ7oaGk2xAA0OwUXT8IW2kXTVcSvQzWef4RwQT",
@@ -34,7 +34,9 @@ class MainController extends Controller
         curl_close($curl);
 
 
-        return response()->json(json_decode($response, true));
+        return response()->json(json_decode($response, true));*/
+
+        return view('home');
 
     }
 
