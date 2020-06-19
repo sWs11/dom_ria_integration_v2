@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Classes\Cron;
 use App\Classes\Integrations\TelegramBot;
+use App\Models\Order;
 use Illuminate\Console\Command;
 
 class DomRiaLiveUpdate extends Command
@@ -39,10 +40,18 @@ class DomRiaLiveUpdate extends Command
      */
     public function handle()
     {
+
         $cron = new Cron();
 
         while (true) {
-            $cron->getOrdersFromDomRia();
+            $last_order = Order::orderBy('created_at', 'DESC')->first();
+            $last_order_date = $last_order ? date_create_from_format("Y-m-d H:i:s", $last_order->created_at)->format('Y-m-d') : null;
+
+            $cron->getOrdersFromDomRia($last_order_date);
+
+            $this->info('--------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
+            $this->info('--------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
+
             sleep(60);
         }
     }

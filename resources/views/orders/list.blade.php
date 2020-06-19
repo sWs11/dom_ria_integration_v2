@@ -8,9 +8,31 @@
 
 @section('content')
     <div class="container mb-2">
-        <form class="w-100">
-            <div class="row">
-                <div class="col-3">
+
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-md-3">
+                <form class="w-100">
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-info w-100 mb-2" id="subscribe" type="button">Підписатись</button>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="select_wr">
+                            <label for="sort_select">Сортировка</label>
+                            <select id="sort" name="sort">
+                                <option value="1" >По дате</option>
+                                <option value="2" >Цена по возростанию</option>
+                                <option value="3" >Цена по убиванию</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr>
+
                     <div class="row justify-content-center">
                         <div class="select_wr">
                             <label for="category_select">Категорія</label>
@@ -22,8 +44,6 @@
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="col-3">
                     <div class="row justify-content-center">
                         <div class="select_wr">
                             <label for="realty_type_select">Тип</label>
@@ -35,8 +55,6 @@
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="col-3">
                     <div class="row justify-content-center">
                         <div class="select_wr">
                             <label for="operation_type_select">Операція</label>
@@ -48,39 +66,34 @@
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="col-3">
+
+                    <div class="row mt-4">
+                        <div class="col-12">Цена</div>
+                        <div class="col-6">
+                            <label for="price_from" class="mb-0">От</label>
+                            <div class="input-group mt-0">
+                                <input type="text" class="form-control" value="{{ is_null(request()->get('price')) ? '' : request()->get('price')['from'] }}" id="price_from" name="price[from]">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="price_to" class="mb-0">До</label>
+                            <div class="input-group mt-0">
+                                <input type="text" class="form-control" value="{{ is_null(request()->get('price')) ? '' : request()->get('price')['to'] }}" id="price_to" name="price[to]">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row justify-content-center">
                         <div class="select_wr">
                             <button class="btn btn-success w-100" style="margin-top: 32px;">Поиск</button>
                         </div>
                     </div>
-                </div>
+
+                </form>
             </div>
-            <div class="row">
-                <div class="col-3">
-                    <div class="row justify-content-center">
-                        <div class="select_wr">
-                            <label for="sort_select">Сортировка</label>
-                            <select id="sort" name="sort">
-                                <option value="1" >По дате</option>
-                                <option value="2" >Цена по возростанию</option>
-                                <option value="3" >Цена по убиванию</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <button class="btn btn-info" id="subscribe" type="button">Підписатись</button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
+
+
+            <div class="col-md-9">
                 @foreach($orders as $order)
 
                     <div class="card mb-3">
@@ -88,7 +101,7 @@
 
                                 <div class="col-md-4">
                                     <a href="{{ config('common.dom_ria_base_url') . $order->beautiful_url }}" target="_blank">
-                                        <img src="{{ config('common.ria_images_base_url') . $order->main_photo }}" class="card-img" alt="...">
+                                        <img src=@if(!empty($order->main_photo))"{{ config('common.ria_images_base_url') . $order->main_photo }}"@else"https://dom.riastatic.com/css/images/pictures/no_photo/300x200.png?v=1"@endif class="card-img" alt="...">
                                     </a>
                                 </div>
                                 <div class="col-md-8">
@@ -236,6 +249,10 @@
                     realty_type_parent_id: categories_select.passedElement.value,
                     realty_type_id: realty_types_select.passedElement.value,
                     advert_type_id: operation_types_select.passedElement.value,
+                    price: {
+                        from: $('#price_from').val(),
+                        to: $('#price_to').val()
+                    },
                 };
 
                 console.log(filter);
@@ -251,7 +268,12 @@
                 .done(function (response) {
                     if(response.status === 'success') {
                         getSubscribeLink();
+                    } else {
+                        alert('error');
                     }
+                })
+                .fail(function (response) {
+                    alert('error');
                 });
             }
 
@@ -262,6 +284,9 @@
                 .done(function (response) {
                     var new_tab = window.open('', '_blank');
                     new_tab.location.href = response.data.link;
+                })
+                .fail(function (response) {
+                    alert('error');
                 });
             }
 

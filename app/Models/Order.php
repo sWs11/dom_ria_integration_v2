@@ -133,14 +133,14 @@ class Order extends Model
     public function getMainPhotoAttribute($value)
     {
         $arr = explode('.', $value);
-        if(!isset($arr[1])) {
+        if(!isset($arr[1]) || preg_match('~^http~', $value)) {
             debug([
                 '$value' => $value,
                 'id' => $this->id,
                 'count' => count($arr),
             ]);
 
-            return '';
+            return $value;
         }
 
         return $arr[0] . 'b.' . $arr[1];

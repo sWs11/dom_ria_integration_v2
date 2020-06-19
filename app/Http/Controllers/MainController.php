@@ -8,6 +8,7 @@ use App\Classes\Integrations\DomRia;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\OperationType;
+use App\Models\Order;
 use App\Models\RealtyType;
 use App\Models\Region;
 use Illuminate\Http\Request;
@@ -192,10 +193,12 @@ class MainController extends Controller
 
         ini_set('max_execution_time', 600);
 
+        $last_order = Order::orderBy('created_at', 'DESC')->first();
+        $last_order_date = $last_order ? date_create_from_format("Y-m-d H:i:s", $last_order->created_at)->format('Y-m-d') : null;
 
         $cron = new Cron();
 
-        $cron->getOrdersFromDomRia();
+        $cron->getOrdersFromDomRia($last_order_date);
     }
 
     public function testEcho() {

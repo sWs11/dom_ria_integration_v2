@@ -56,6 +56,8 @@ class DomRia {
         $response = $this->sendRequest('search', array_merge(['page' => $page], $filter));
         $response_array = json_decode($response, true);
 
+//        dump($page, $response_array);
+
         return $response_array;
     }
 
@@ -71,9 +73,7 @@ class DomRia {
         switch ($method) {
             case 'search':
                 $url = 'https://developers.ria.com/dom/search?' . http_build_query($params);
-
-                echo $url;
-
+//                echo $url;
                 break;
 
             case 'info':

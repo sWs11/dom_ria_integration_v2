@@ -16,7 +16,7 @@ class OrdersController extends Controller
         $available_sort = [
             '1' => ['field' => 'created_at', 'dir' => 'DESC'],
             '2' => ['field' => 'price', 'dir' => 'DESC'],
-            '3' => ['field' => 'price', 'dir' => 'ASC']
+            '3' => ['field' => 'price', 'dir' => 'ASC'],
         ];
 
         $limit = $request->get('limit', 50);
@@ -67,11 +67,31 @@ class OrdersController extends Controller
             'realty_type_parent_id' => 'orders.realty_type_parent_id', // Категорія (Тип объекта)
             'realty_type_id' => 'orders.realty_type_id', // Тип недвижимости
             'advert_type_id' => 'orders.advert_type_id', // Тип операции
+            'price' => 'orders.price', // Тип операции
         ];
+
+//        dd($filter_params);
 
         foreach ($filter_params as $key => $value) {
             if(array_key_exists($key, $available_filter_fields) && !empty($value)) {
-                $query->where($available_filter_fields[$key], $value);
+
+
+                switch ($key) {
+                    case 'price':
+
+//                        dd($value['to'] === 0);
+
+                        if (!empty($value['from']) || $value['from'] === 0)
+                            $query->where($available_filter_fields[$key], '>', $value['from']);
+
+                        if (!empty($value['to']) || $value['to'] === 0)
+                            $query->where($available_filter_fields[$key], '<', $value['to']);
+
+                        break;
+
+                    default:
+                        $query->where($available_filter_fields[$key], $value);
+                }
             }
         }
     }

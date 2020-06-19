@@ -71,9 +71,9 @@ class TelegramGetUpdates extends Command
 
         $response_arr = json_decode($response, true);
 
-        dd($response_arr);
+//        dd($response_arr);
 
-        $this->table(array_keys($response_arr), $response_arr);
+//        $this->table(array_keys($response_arr), $response_arr);
 
         $new_subscribes = [];
 

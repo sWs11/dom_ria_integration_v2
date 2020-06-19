@@ -54,10 +54,10 @@ class Cron {
     }
 
 
-
-    public function getOrdersFromDomRia() {
+    public function getOrdersFromDomRia($date_from = null) {
         $count_pages = 1;
         $current_page = 0;
+        $date_from = empty($date_from) ? date('Y-m-d') : $date_from;
 
         $dom_ria_integration = new DomRia();
 
@@ -66,7 +66,15 @@ class Cron {
         ];
 
         do {
-            $result = $dom_ria_integration->getOrdersFromApi($current_page, array_merge(['date_from' => '2020-06-17'], $filter));
+//            $result = $dom_ria_integration->getOrdersFromApi($current_page, array_merge(['date_from' => '2020-06-17'], $filter));
+            $result = $dom_ria_integration->getOrdersFromApi($current_page, array_merge(['date_from' => $date_from], $filter));
+
+//            dump(['!isset($result[\'count\'])' => !isset($result['count'])]);
+//            dump(['!isset($result[\'items\'])' => !isset($result['items'])]);
+
+            if(!isset($result['count']) || !isset($result['items']))
+                break;
+
             $count_pages = $current_page !== 0 ? $count_pages : ceil($result['count']/100);
             $orders_ext_ids = $result['items'];
 
@@ -201,12 +209,9 @@ class Cron {
     }
 
     private function createOrder($response, $ext_id) {
+        $empty_photo_link = 'https://dom.riastatic.com/css/images/pictures/no_photo/300x200.png?v=1';
+
         $response_arr = json_decode($response, true);
-
-//        dd($response);
-
-//        echo $response;
-//        die();
 
         try {
             Order::create([
